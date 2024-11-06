@@ -13,6 +13,7 @@ import path from "path";
 export default defineConfig({
   plugins: [react(),
   restart({ restart: ['../static/**',] }),
+
   ],
 
   resolve: {
