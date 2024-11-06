@@ -6,7 +6,7 @@ export function Header() {
         src="https://tse3.mm.bing.net/th/id/OIP.ttrMGJgcP1foipZsNg_IsgHaHa?rs=1&pid=ImgDetMain"
         alt=""
       />
-      <h1 className="text-30 font-bold">Solution Name</h1>
+      <h1 className="text-30 font-bold">Budget Insights</h1>
       <div className="flex gap-2 px-20">
         <button className="btn btn-accent btn-active btn-md rounded-lg">
           Solution 1

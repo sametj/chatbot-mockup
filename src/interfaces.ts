@@ -1,4 +1,7 @@
+type ChatType = "UserChat" | 'BotChat';
+
 export interface Query {
-  question: string;
-  response: string | null;
+  id: string;
+  content: string;
+  type: ChatType
 }

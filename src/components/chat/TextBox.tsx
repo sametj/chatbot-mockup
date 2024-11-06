@@ -1,10 +1,6 @@
+import { Query } from "@/interfaces";
 import api from "@/services/api";
 import React, { FormEvent, useEffect, useRef, useState } from "react";
-
-interface Query {
-  question: string;
-  response: string | null;
-}
 
 interface TextBoxProps {
   queries: Query[];
@@ -48,6 +44,13 @@ const TextBox: React.FC<TextBoxProps> = ({
     callQuery();
   };
 
+  useEffect(() => {
+    setQueries([
+      ...queries,
+      { id: String(Date.now()), content: question, type: "UserChat" },
+    ]);
+  }, []);
+
   const callQuery = async () => {
     const payload = { question };
 
@@ -59,6 +62,7 @@ const TextBox: React.FC<TextBoxProps> = ({
         const answerJson = response.data.answer;
         setAnswer(answerJson);
         setIsLoading(false);
+        api.post("/generate_insight");
       }
     } catch (error) {
       console.log(error);
@@ -67,10 +71,12 @@ const TextBox: React.FC<TextBoxProps> = ({
   };
 
   useEffect(() => {
-    // if (question && answer) {
-    const newQuery: Query = { question, response: answer };
+    const newQuery: Query = {
+      id: String(Date.now()),
+      content: answer,
+      type: "BotChat",
+    };
     setQueries([...queries, newQuery]);
-    // }
   }, [question, answer, setQueries]);
 
   return (
