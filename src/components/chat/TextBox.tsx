@@ -14,8 +14,7 @@ const TextBox: React.FC<TextBoxProps> = ({
   setIsLoading,
 }) => {
   const [divHeight, setDivHeight] = useState(50);
-  const [question, setQuestion] = useState("");
-  const [answer, setAnswer] = useState("");
+  const [question, setQuestion] = useState<string>();
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
@@ -39,17 +38,19 @@ const TextBox: React.FC<TextBoxProps> = ({
 
   const handleTextSubmit = (event: FormEvent) => {
     event.preventDefault();
+    const newQuery: Query = {
+      id: String(Date.now()),
+      content: String(textareaRef.current?.value),
+      type: "UserChat",
+    };
     setQuestion(textareaRef.current?.value || "");
+    setQueries([...queries, newQuery]);
     document.querySelector<HTMLTextAreaElement>("#chat")!.value = "";
-    callQuery();
   };
 
   useEffect(() => {
-    setQueries([
-      ...queries,
-      { id: String(Date.now()), content: question, type: "UserChat" },
-    ]);
-  }, []);
+    callQuery();
+  }, [question]);
 
   const callQuery = async () => {
     const payload = { question };
@@ -60,24 +61,20 @@ const TextBox: React.FC<TextBoxProps> = ({
       const response = await api.post("/query", payload);
       if (response.status === 200) {
         const answerJson = response.data.answer;
-        setAnswer(answerJson);
+
+        const newQuery: Query = {
+          id: String(Date.now()),
+          content: answerJson,
+          type: "BotChat",
+        };
+        setQueries([...queries, newQuery]);
         setIsLoading(false);
-        api.post("/generate_insight");
       }
     } catch (error) {
       console.log(error);
       setIsLoading(false);
     }
   };
-
-  useEffect(() => {
-    const newQuery: Query = {
-      id: String(Date.now()),
-      content: answer,
-      type: "BotChat",
-    };
-    setQueries([...queries, newQuery]);
-  }, [question, answer, setQueries]);
 
   return (
     <div className="bottom-0 right-0 flex w-full items-center justify-center p-8">
