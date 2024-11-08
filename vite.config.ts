@@ -16,9 +16,12 @@ export default defineConfig({
 
   ],
 
+
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
+      'danfojs': path.resolve(__dirname, 'node_modules/danfojs/dist/danfojs-browser/src/index.js')
+
     },
   },
 

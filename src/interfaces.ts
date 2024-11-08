@@ -5,3 +5,20 @@ export interface Query {
   content: string;
   type: ChatType
 }
+
+
+
+export interface FinancialData {
+  [key: string]: string;
+}
+
+export interface ChartData {
+  labels: string[];
+  datasets: {
+    label: string;
+    data: number[];
+    backgroundColor: string;
+    borderColor: string;
+    borderWidth: number;
+  }[];
+}

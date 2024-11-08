@@ -1,10 +1,12 @@
 import { Query } from "@/interfaces";
 import api from "@/services/api";
+
+import { DataFrame } from "danfojs";
 import React, { FormEvent, useEffect, useRef, useState } from "react";
 
 interface TextBoxProps {
   queries: Query[];
-  setQueries: (queries: Query[]) => void;
+  setQueries: React.Dispatch<React.SetStateAction<Query[]>>;
   setIsLoading: (bool: boolean) => void;
 }
 
@@ -13,8 +15,7 @@ const TextBox: React.FC<TextBoxProps> = ({
   setQueries,
   setIsLoading,
 }) => {
-  const [divHeight, setDivHeight] = useState(50);
-  const [question, setQuestion] = useState<string>();
+  const [divHeight, setDivHeight] = useState(100);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
@@ -22,7 +23,7 @@ const TextBox: React.FC<TextBoxProps> = ({
     if (!textarea) return;
 
     const handleResize = () => {
-      setDivHeight(Math.min(textarea.scrollHeight, 240));
+      setDivHeight(Math.min(textarea.scrollHeight, 300));
     };
 
     const resizeObserver = new ResizeObserver(handleResize);
@@ -36,23 +37,19 @@ const TextBox: React.FC<TextBoxProps> = ({
     };
   }, []);
 
-  const handleTextSubmit = (event: FormEvent) => {
+  function handleTextSubmit(event: FormEvent) {
     event.preventDefault();
+    const newQuestion = String(textareaRef.current?.value as string);
     const newQuery: Query = {
       id: String(Date.now()),
-      content: String(textareaRef.current?.value),
+      content: newQuestion,
       type: "UserChat",
     };
-    setQuestion(textareaRef.current?.value || "");
     setQueries([...queries, newQuery]);
-    document.querySelector<HTMLTextAreaElement>("#chat")!.value = "";
-  };
+    callQuery(newQuestion);
+  }
 
-  useEffect(() => {
-    callQuery();
-  }, [question]);
-
-  const callQuery = async () => {
+  const callQuery = async (question: string | null) => {
     const payload = { question };
 
     setIsLoading(true);
@@ -61,26 +58,40 @@ const TextBox: React.FC<TextBoxProps> = ({
       const response = await api.post("/query", payload);
       if (response.status === 200) {
         const answerJson = response.data.answer;
+        console.log(answerJson);
 
-        const newQuery: Query = {
-          id: String(Date.now()),
-          content: answerJson,
-          type: "BotChat",
-        };
-        setQueries([...queries, newQuery]);
-        setIsLoading(false);
+        let formattedAnswer = answerJson;
+        if (Array.isArray(answerJson)) {
+          formattedAnswer = answerJson.reduce((acc, row) => {
+            Object.keys(row).forEach((key) => {
+              if (!acc[key]) acc[key] = [];
+              acc[key].push(row[key]);
+            });
+
+            return acc as DataFrame;
+          }, {});
+        }
+
+        // const newQuery: Query = {
+        //   id: String(Date.now()),
+        //   content: answerJson,
+        //   type: "BotChat",
+        // };
+        // setQueries((queries) => [...queries, newQuery]);
       }
     } catch (error) {
       console.log(error);
+    } finally {
       setIsLoading(false);
+      document.querySelector<HTMLTextAreaElement>("#chat")!.value = "";
     }
   };
 
   return (
     <div className="bottom-0 right-0 flex w-full items-center justify-center p-8">
       <form
-        style={{ height: divHeight }}
         onSubmit={handleTextSubmit}
+        style={{ height: divHeight }}
         className="relative flex w-3/5 items-center justify-start rounded-2xl bg-base-200 p-8 shadow-md"
       >
         <textarea

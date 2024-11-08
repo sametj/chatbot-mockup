@@ -30,6 +30,24 @@ export default function LeftSideBar() {
       console.log(error);
     }
   }
+
+  async function clearCache() {
+    try {
+      const response = await api.post("/clear_cache", null, {
+        headers: {
+          Authorization: `Bearer ${import.meta.env.VITE_OPENAI_API_KEY}`,
+        },
+      });
+      if (response.status === 200) {
+        console.log(response.data.detail);
+      } else {
+        console.log("Failed to clear cache");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   return (
     <aside
       className={`relative transition-all duration-300 ease-linear ${isLeftNavToggled ? "w-300" : "w-50"} flex flex-col items-center`}
@@ -61,7 +79,10 @@ export default function LeftSideBar() {
           </div>
         </div>
       </section>
-      <button className="btn btn-primary absolute bottom-0 mb-20 h-50 self-center">
+      <button
+        onClick={() => clearCache()}
+        className="btn btn-primary absolute bottom-0 mb-20 h-50 self-center"
+      >
         Clear Cache
       </button>
     </aside>
