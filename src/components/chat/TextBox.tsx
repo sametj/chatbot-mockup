@@ -1,7 +1,7 @@
 import { Query } from "@/interfaces";
 import api from "@/services/api";
+import formatDf from "@/utils/formatDf";
 
-import { DataFrame } from "danfojs";
 import React, { FormEvent, useEffect, useRef, useState } from "react";
 
 interface TextBoxProps {
@@ -16,6 +16,7 @@ const TextBox: React.FC<TextBoxProps> = ({
   setIsLoading,
 }) => {
   const [divHeight, setDivHeight] = useState(100);
+
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
@@ -58,26 +59,22 @@ const TextBox: React.FC<TextBoxProps> = ({
       const response = await api.post("/query", payload);
       if (response.status === 200) {
         const answerJson = response.data.answer;
-        console.log(answerJson);
 
-        let formattedAnswer = answerJson;
-        if (Array.isArray(answerJson)) {
-          formattedAnswer = answerJson.reduce((acc, row) => {
-            Object.keys(row).forEach((key) => {
-              if (!acc[key]) acc[key] = [];
-              acc[key].push(row[key]);
-            });
+        const formattedData = formatDf(answerJson);
 
-            return acc as DataFrame;
-          }, {});
+        let answer;
+        try {
+          answer = formattedData.print();
+        } catch {
+          answer = answerJson;
         }
 
-        // const newQuery: Query = {
-        //   id: String(Date.now()),
-        //   content: answerJson,
-        //   type: "BotChat",
-        // };
-        // setQueries((queries) => [...queries, newQuery]);
+        const newQuery: Query = {
+          id: String(Date.now()),
+          content: answer,
+          type: "BotChat",
+        };
+        setQueries((queries) => [...queries, newQuery]);
       }
     } catch (error) {
       console.log(error);

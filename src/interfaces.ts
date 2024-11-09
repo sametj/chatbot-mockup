@@ -8,9 +8,7 @@ export interface Query {
 
 
 
-export interface FinancialData {
-  [key: string]: string;
-}
+
 
 export interface ChartData {
   labels: string[];
