@@ -1,5 +1,7 @@
-import { Query } from "@/interfaces";
+import { DataType, Query } from "@/interfaces";
 import { Fragment, useRef, useState } from "react";
+import Chart from "../Chart";
+import Table from "../Table";
 import { BotChat, UserChat } from "./ChatTypes";
 import TextBox from "./TextBox";
 
@@ -20,9 +22,16 @@ export default function Chat() {
         {queries.map((query) => (
           <Fragment key={query.id}>
             {query.type === "UserChat" ? (
-              <UserChat text={query.content} />
+              <UserChat
+                text={typeof query.content === "string" ? query.content : ""}
+              />
+            ) : typeof query.content === "object" ? (
+              <BotChat>
+                <Table data={query.content as DataType} />
+                <Chart data={query.content as DataType} />
+              </BotChat>
             ) : (
-              <BotChat text={query.content} />
+              <BotChat content={query.content as string} />
             )}
           </Fragment>
         ))}

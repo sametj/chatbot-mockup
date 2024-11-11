@@ -1,6 +1,5 @@
 import { Query } from "@/interfaces";
 import api from "@/services/api";
-import formatDf from "@/utils/formatDf";
 
 import React, { FormEvent, useEffect, useRef, useState } from "react";
 
@@ -48,6 +47,7 @@ const TextBox: React.FC<TextBoxProps> = ({
     };
     setQueries([...queries, newQuery]);
     callQuery(newQuestion);
+    document.querySelector<HTMLTextAreaElement>("#chat")!.value = "";
   }
 
   const callQuery = async (question: string | null) => {
@@ -60,18 +60,11 @@ const TextBox: React.FC<TextBoxProps> = ({
       if (response.status === 200) {
         const answerJson = response.data.answer;
 
-        const formattedData = formatDf(answerJson);
-
-        let answer;
-        try {
-          answer = formattedData.print();
-        } catch {
-          answer = answerJson;
-        }
+        // const formattedData = formatDf(answerJson);
 
         const newQuery: Query = {
           id: String(Date.now()),
-          content: answer,
+          content: answerJson,
           type: "BotChat",
         };
         setQueries((queries) => [...queries, newQuery]);
@@ -80,7 +73,6 @@ const TextBox: React.FC<TextBoxProps> = ({
       console.log(error);
     } finally {
       setIsLoading(false);
-      document.querySelector<HTMLTextAreaElement>("#chat")!.value = "";
     }
   };
 

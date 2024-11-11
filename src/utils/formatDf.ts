@@ -1,4 +1,3 @@
-import { DataFrame } from "danfojs";
 
 interface OriginalData {
   [key: string]: Record<string, unknown>;
@@ -14,9 +13,9 @@ export default function formatDf(answer: OriginalData) {
     newData[key] = Object.values(value);
   });
 
-  const formattedAnswer = new DataFrame(newData);
 
-  return formattedAnswer;
+
+  return newData;
 }
 
 

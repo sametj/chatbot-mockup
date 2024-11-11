@@ -1,10 +1,16 @@
 import robot from "/robot-fill.svg";
 
-export function BotChat({ text }: { text: string }) {
+export function BotChat({
+  content,
+  children,
+}: {
+  content?: string | React.ReactNode;
+  children?: React.ReactNode;
+}) {
   return (
     <div className="flex justify-start gap-20 self-start">
       <img className="avatar chat-image" src={robot} alt="robot-icon" />
-      <div className="chat-bubble">{text}</div>
+      <div className="chat-bubble">{content ? content : children}</div>
     </div>
   );
 }
