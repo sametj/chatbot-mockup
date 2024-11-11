@@ -1,7 +1,9 @@
 import { Query } from "@/interfaces";
 import api from "@/services/api";
+import formatDf from "@/utils/formatDf";
 
 import React, { FormEvent, useEffect, useRef, useState } from "react";
+import InsightsContainer from "../InsightsContainer";
 
 interface TextBoxProps {
   queries: Query[];
@@ -60,12 +62,31 @@ const TextBox: React.FC<TextBoxProps> = ({
       if (response.status === 200) {
         const answerJson = response.data.answer;
 
-        // const formattedData = formatDf(answerJson);
+        const formattedData = formatDf(answerJson);
+
+        let insight = null;
+
+        try {
+          const insights = await api.post(
+            "/generate_insight",
+            { chart_df: formattedData },
+            {
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${import.meta.env.VITE_OPENAI_API_KEY}`,
+              },
+            },
+          );
+          insight = insights.data.summary;
+        } catch (error) {
+          console.log(error);
+        }
 
         const newQuery: Query = {
           id: String(Date.now()),
           content: answerJson,
           type: "BotChat",
+          insights: <InsightsContainer insights={insight} />,
         };
         setQueries((queries) => [...queries, newQuery]);
       }

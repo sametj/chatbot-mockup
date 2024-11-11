@@ -1,5 +1,6 @@
 import { DataType } from "@/interfaces";
 import {
+  ArcElement,
   BarElement,
   CategoryScale,
   Chart as ChartJS,
@@ -18,6 +19,7 @@ ChartJS.register(
   Title,
   Tooltip,
   Legend,
+  ArcElement,
 );
 
 const Chart = ({ data }: { data: DataType }) => {
@@ -28,12 +30,17 @@ const Chart = ({ data }: { data: DataType }) => {
   // Prepare datasets dynamically from the remaining keys
   const datasets = Object.keys(data)
     .slice(1)
-    .map((key, index) => {
+    .map((key) => {
       const values = Object.values(data[key]) as number[];
       return {
         label: key.replace(/_/g, " "), // Format key names for display
         data: values,
-        backgroundColor: `rgba(${(index * 100) % 255}, ${(index * 150) % 255}, ${(index * 200) % 255}, 0.6)`,
+        // backgroundColor: `rgba(${(index * 100) % 255}, ${(index * 150) % 255}, ${(index * 200) % 255}, 1)`,
+        backgroundColor: [
+          "rgb(255, 99, 132)",
+          "rgb(54, 162, 235)",
+          "rgb(255, 205, 86)",
+        ],
       };
     });
 

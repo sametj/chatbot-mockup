@@ -1,9 +1,12 @@
+import React from "react";
+
 type ChatType = "UserChat" | 'BotChat';
 
 export interface Query {
   id: string;
   content: string | object;
   type: ChatType
+  insights?: string | React.ReactNode;
 }
 
 
@@ -12,13 +15,3 @@ export interface DataType {
 }
 
 
-export interface ChartData {
-  labels: string[];
-  datasets: {
-    label: string;
-    data: number[];
-    backgroundColor: string;
-    borderColor: string;
-    borderWidth: number;
-  }[];
-}

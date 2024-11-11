@@ -29,6 +29,7 @@ export default function Chat() {
               <BotChat>
                 <Table data={query.content as DataType} />
                 <Chart data={query.content as DataType} />
+                {query.insights}
               </BotChat>
             ) : (
               <BotChat content={query.content as string} />
