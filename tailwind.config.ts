@@ -64,7 +64,13 @@ export default {
   ],
   daisyui: {
     themes: [
-      "corporate"
+      {
+        myTheme: {
+          'primary': "#5427fc",
+          "base-100": "#f9fafb",
+
+        }
+      }, "corporate",
     ]
   }
 } satisfies Config

@@ -1,7 +1,6 @@
 import { Query } from "@/interfaces";
 import api from "@/services/api";
 
-import formatDf from "@/utils/formatDf";
 import React, { FormEvent, useEffect, useRef, useState } from "react";
 import InsightsContainer from "../InsightsContainer";
 
@@ -61,14 +60,13 @@ const TextBox: React.FC<TextBoxProps> = ({
       const response = await api.post("/query", payload);
       if (response.status === 200) {
         const answerJson = response.data.answer;
-        const formattedData = formatDf(answerJson);
 
         let insight = null;
 
         try {
           const insights = await api.post(
             "/generate_insight",
-            { chart_df: formattedData },
+            { chart_df: answerJson },
             {
               headers: {
                 "Content-Type": "application/json",
@@ -112,7 +110,7 @@ const TextBox: React.FC<TextBoxProps> = ({
         />
         <button
           type="submit"
-          className="btn btn-circle btn-md absolute bottom-20 right-10 flex w-50 items-center justify-center bg-violet-400"
+          className="btn btn-circle btn-primary btn-md absolute bottom-20 right-10 flex w-50 items-center justify-center"
         >
           <img
             className="h-full w-25"

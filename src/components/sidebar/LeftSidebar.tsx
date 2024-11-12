@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from "react";
+import { useState } from "react";
 import api from "../../services/api";
 import ChatHistory from "../chat/ChatHistory";
 import SidebarButton from "../SidebarButton";
@@ -12,28 +12,6 @@ const textdemo =
 
 export default function LeftSideBar() {
   const [isLeftNavToggled, setIsLeftNavToggled] = useState(false);
-
-  async function handleFileSubmit(e: ChangeEvent<HTMLInputElement>) {
-    const file = e.target.files![0];
-    const formData = new FormData();
-
-    formData.append("file", file);
-
-    try {
-      const response = await api.post("/process_file", formData, {
-        headers: {
-          Authorization: `Bearer ${import.meta.env.VITE_OPENAI_API_KEY}`,
-        },
-      });
-      if (response.status === 200) {
-        console.log("file uploaded sucessfukl");
-      } else {
-        console.log("Failed to upload file");
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  }
 
   async function clearCache() {
     try {
@@ -66,16 +44,6 @@ export default function LeftSideBar() {
         className={`flex h-[80%] w-full flex-col ${!isLeftNavToggled ? "-translate-x-600" : ""} overflow-auto transition-all duration-300 ease-in`}
       >
         <div className="flex flex-col justify-between gap-20 px-30 py-20">
-          {/* <form className="h-100 w-full bg-blue-200 p-8">
-            <label>Upload a Data File</label>
-            <input
-              onChange={handleFileSubmit}
-              type="file"
-              name="file_upload"
-              className="file-input file-input-bordered file-input-sm w-full max-w-xs rounded-lg"
-              accept=".csv, .xls, .xlsx, .xlsm,.xlsb "
-            />
-          </form> */}
           <FileUpload />
           <SidebarButton icon={chatIcon} text="Chat" />
           <SidebarButton icon={chatIcon} text="Data" />
@@ -91,7 +59,7 @@ export default function LeftSideBar() {
       </section>
       <button
         onClick={() => clearCache()}
-        className="btn btn-primary absolute bottom-0 mb-20 h-50 self-center"
+        className={`btn btn-primary btn-wide absolute bottom-0 mb-20 h-50 self-center rounded-lg text-white ${!isLeftNavToggled ? "-translate-x-600" : ""} transition-all duration-300 ease-in`}
       >
         Clear Cache
       </button>

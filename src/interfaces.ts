@@ -14,4 +14,9 @@ export interface DataType {
   [key: string]: { [key: string]: number | string };
 }
 
+export interface FileValidation {
+  name: string;
+  type: string;
+  size: number;
+}
 
