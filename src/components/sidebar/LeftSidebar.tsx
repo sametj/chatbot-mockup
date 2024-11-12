@@ -1,7 +1,11 @@
 import { ChangeEvent, useState } from "react";
 import api from "../../services/api";
 import ChatHistory from "../chat/ChatHistory";
+import SidebarButton from "../SidebarButton";
 import leftsidebar from "/sidebar-left.svg";
+
+import chatIcon from "@/assets/svg/chat-circle-dots.svg";
+import FileUpload from "../FileUpload";
 
 const textdemo =
   "at eius adipisci illum illo quis vel, saepe reiciendis sit dolorum natus quaerat tenetur!orem, ipsum dolor sit amet consectetur adipisicing elit. Facilis earum incidunt recusandae aliquam porro corrupti voluptates at eius adipisci illum illo quis vel, saepe reiciendis sit dolorum natus quaerat tenetur!";
@@ -62,13 +66,19 @@ export default function LeftSideBar() {
         className={`flex h-[80%] w-full flex-col ${!isLeftNavToggled ? "-translate-x-600" : ""} overflow-auto transition-all duration-300 ease-in`}
       >
         <div className="flex flex-col justify-between gap-20 px-30 py-20">
-          <input
-            onChange={handleFileSubmit}
-            type="file"
-            className="file-input file-input-bordered file-input-sm w-full max-w-xs rounded-lg"
-          />
-          <button className="btn btn-primary">Chat</button>
-          <button className="btn btn-primary">Data</button>
+          {/* <form className="h-100 w-full bg-blue-200 p-8">
+            <label>Upload a Data File</label>
+            <input
+              onChange={handleFileSubmit}
+              type="file"
+              name="file_upload"
+              className="file-input file-input-bordered file-input-sm w-full max-w-xs rounded-lg"
+              accept=".csv, .xls, .xlsx, .xlsm,.xlsb "
+            />
+          </form> */}
+          <FileUpload />
+          <SidebarButton icon={chatIcon} text="Chat" />
+          <SidebarButton icon={chatIcon} text="Data" />
           <h2 className="font-bold text-zinc-500">Pinned Chats</h2>
           <div className="flex max-h-300 flex-col gap-20 overflow-auto">
             <ChatHistory text={textdemo} />

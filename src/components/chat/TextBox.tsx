@@ -1,6 +1,7 @@
 import { Query } from "@/interfaces";
 import api from "@/services/api";
 
+import formatDf from "@/utils/formatDf";
 import React, { FormEvent, useEffect, useRef, useState } from "react";
 import InsightsContainer from "../InsightsContainer";
 
@@ -60,13 +61,14 @@ const TextBox: React.FC<TextBoxProps> = ({
       const response = await api.post("/query", payload);
       if (response.status === 200) {
         const answerJson = response.data.answer;
+        const formattedData = formatDf(answerJson);
 
         let insight = null;
 
         try {
           const insights = await api.post(
             "/generate_insight",
-            { chart_df: answerJson },
+            { chart_df: formattedData },
             {
               headers: {
                 "Content-Type": "application/json",
