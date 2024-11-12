@@ -73,7 +73,14 @@ const Chart = ({ data }: { data: DataType }) => {
     },
   };
 
-  return <Bar key={Date.now.toString()} data={chartData} options={options} />;
+  return (
+    <details className="collapse bg-base-100 p-8">
+      <summary className="collapse-title text-xl font-bold">
+        Show Visual
+      </summary>
+      <Bar key={Date.now.toString()} data={chartData} options={options} />
+    </details>
+  );
 };
 
 export default Chart;

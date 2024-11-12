@@ -8,13 +8,13 @@ const Table = ({ data }: { data: DataType }) => {
   const rowCount = Object.keys(data[columnTitles[0]]).length;
 
   return (
-    <div className="overflow-x-auto">
+    <div className="overflow-x-auto rounded-2xl bg-base-100">
       <table className="table w-full">
         <thead>
           <tr>
             {/* Render column headers */}
             {columnTitles.map((title, index) => (
-              <th key={index} className="capitalize text-white">
+              <th key={index} className="font-bold capitalize">
                 {title.replace(/_/g, " ")}
               </th>
             ))}

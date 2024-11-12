@@ -66,8 +66,8 @@ export default {
     themes: [
       {
         myTheme: {
-          'primary': "#5427fc",
-          "base-100": "#f9fafb",
+          'primary': "#2e148e",
+          "base-100": "#f7f8fa",
 
         }
       }, "corporate",

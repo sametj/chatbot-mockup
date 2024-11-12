@@ -59,7 +59,7 @@ export default function LeftSideBar() {
       </section>
       <button
         onClick={() => clearCache()}
-        className={`btn btn-primary btn-wide absolute bottom-0 mb-20 h-50 self-center rounded-lg text-white ${!isLeftNavToggled ? "-translate-x-600" : ""} transition-all duration-300 ease-in`}
+        className={`btn btn-primary btn-wide absolute bottom-0 mb-20 h-50 self-center rounded-lg text-lg font-bold text-white ${!isLeftNavToggled ? "-translate-x-600" : ""} transition-all duration-300 ease-in`}
       >
         Clear Cache
       </button>

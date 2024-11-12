@@ -5,7 +5,7 @@ export default function RightSideBar() {
   const [isRightNavToggled, setIsRightNavToggled] = useState(false);
   return (
     <aside
-      className={`relative transition-all duration-300 ease-linear ${isRightNavToggled ? "w-300" : "w-50"} `}
+      className={`relative bg-white transition-all duration-300 ease-linear ${isRightNavToggled ? "w-300" : "w-50"} `}
     >
       <button
         className="absolute left-0"

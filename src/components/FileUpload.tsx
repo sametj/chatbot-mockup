@@ -106,7 +106,7 @@ export default function FileUpload() {
         />
         <label
           htmlFor="file-upload"
-          className="btn btn-primary btn-sm mt-10 cursor-pointer self-start rounded-lg"
+          className="btn btn-primary btn-sm mt-10 cursor-pointer self-start rounded-lg text-white"
         >
           Browse Files
         </label>

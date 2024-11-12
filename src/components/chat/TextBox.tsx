@@ -95,11 +95,11 @@ const TextBox: React.FC<TextBoxProps> = ({
   };
 
   return (
-    <div className="bottom-0 right-0 flex w-full items-center justify-center p-8">
+    <div className="my-auto flex w-full items-center justify-center p-8">
       <form
         onSubmit={handleTextSubmit}
         style={{ height: divHeight }}
-        className="relative flex w-3/5 items-center justify-start rounded-2xl bg-base-200 p-8 shadow-md"
+        className="relative flex w-3/5 items-center justify-start rounded-2xl bg-base-100 p-8 shadow-md"
       >
         <textarea
           ref={textareaRef}
