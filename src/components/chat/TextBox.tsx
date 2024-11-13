@@ -41,6 +41,7 @@ const TextBox: React.FC<TextBoxProps> = ({
   function handleTextSubmit(event: FormEvent) {
     event.preventDefault();
     const newQuestion = String(textareaRef.current?.value as string);
+    if (!newQuestion) return;
     const newQuery: Query = {
       id: String(Date.now()),
       content: newQuestion,

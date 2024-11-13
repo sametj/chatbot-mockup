@@ -1,6 +1,6 @@
 export function Header() {
   return (
-    <header className="aspect-1 flex h-60 w-full items-center justify-between border-b-2 border-black bg-base-300">
+    <header className="aspect-1 flex h-60 w-full items-center justify-between border-b-2 bg-base-100">
       <img
         className="h-full w-60"
         src="https://tse3.mm.bing.net/th/id/OIP.ttrMGJgcP1foipZsNg_IsgHaHa?rs=1&pid=ImgDetMain"

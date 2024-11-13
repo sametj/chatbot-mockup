@@ -14,7 +14,7 @@ export function BotChat({
         <img className="avatar chat-image" src={chatIcon} alt="robot-icon" />
         <span className="font-bold">Here's the Information you requested</span>
       </div>
-      <div className="chat-bubble flex w-full flex-col gap-20 bg-blue-100/40 shadow-2xl">
+      <div className="chat-bubble flex w-full flex-col gap-20 bg-blue-100/40 shadow-lg">
         {content ? content : children}
       </div>
     </div>
