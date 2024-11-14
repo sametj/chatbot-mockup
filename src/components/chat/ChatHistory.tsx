@@ -24,7 +24,11 @@ export default function ChatHistory({
     navigator.clipboard.writeText(text as string);
     toast.success("Copied to clipboard!");
   }
-  function handleIsPinned() {}
+  function handleIsPinned() {
+    setChatHistory((history) =>
+      history.map((h) => (h.id === id ? { ...h, isPinned: !h.isPinned } : h)),
+    );
+  }
 
   return (
     <div className="flex gap-8">
@@ -32,11 +36,11 @@ export default function ChatHistory({
         <span ref={textRef} className="flex-1 overflow-x-auto text-center">
           {text}
         </span>
-        <button onClick={copyToClipBoard}>
+        <button className="p-8" onClick={copyToClipBoard}>
           <img src={clipBoardIcon} alt="copy icon" />
         </button>
       </div>
-      <button>
+      <button onClick={handleIsPinned}>
         <img src={isPinned ? pinnedIcon : unpinnedIcon} />
       </button>
     </div>

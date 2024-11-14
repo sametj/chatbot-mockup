@@ -5,7 +5,6 @@ import { FormEvent, useEffect, useRef, useState } from "react";
 import InsightsContainer from "../InsightsContainer";
 
 function TextBox({
-  queries,
   setQueries,
   setIsLoading,
   chatHistory,
@@ -34,7 +33,7 @@ function TextBox({
 
   useEffect(() => {
     localStorage.setItem("ChatHistory", JSON.stringify(chatHistory));
-  }, [chatHistory, queries]);
+  }, [chatHistory]);
 
   function handleTextSubmit(event: FormEvent) {
     event.preventDefault();
@@ -47,7 +46,7 @@ function TextBox({
       isPinned: false,
     };
     setQueries((q) => [...q, newQuery]);
-    setChatHistory((history) => [...history, newQuery]);
+    setChatHistory((history) => [...history, newQuery || ""]);
     callQuery(newQuestion);
     document.querySelector<HTMLTextAreaElement>("#chat")!.value = "";
   }
@@ -60,6 +59,7 @@ function TextBox({
       const response = await api.post("/query", payload);
       if (response.status === 200) {
         const answerJson = response.data.answer;
+        console.log(answerJson);
 
         let insight = null;
 

@@ -82,8 +82,8 @@ export default function FileUpload() {
   };
 
   return (
-    <div className="flex flex-col items-center gap-8">
-      <span className="self-start font-semibold">Upload a Data File</span>
+    <div className="flex flex-col items-start gap-8">
+      <span className="font-semibold">Upload a Data File</span>
       <div
         className={`flex flex-col rounded-lg border-dashed bg-stone-300 p-8 text-center ${
           isDragging ? "border-2 border-blue-500" : "border-2 border-gray-400"

@@ -1,6 +1,5 @@
 import { useState } from "react";
 import api from "../../services/api";
-import ChatHistory from "../chat/ChatHistory";
 import SidebarButton from "../SidebarButton";
 import leftsidebar from "/sidebar-left.svg";
 
@@ -8,6 +7,7 @@ import chatIcon from "@/assets/svg/chat-circle-dots.svg";
 import { ChatHistoryProps, Query } from "@/interfaces";
 import { toast } from "react-toastify";
 import FileUpload from "../FileUpload";
+import ChatHistory from "../chat/ChatHistory";
 
 export default function LeftSideBar({
   chatHistory,
@@ -34,7 +34,7 @@ export default function LeftSideBar({
 
   return (
     <aside
-      className={`relative transition-all duration-300 ease-linear ${isLeftNavToggled ? "w-300" : "w-50"} flex flex-col items-center`}
+      className={`relative transition-all duration-300 ease-linear ${isLeftNavToggled ? "w-500" : "w-50"} flex flex-col items-center`}
     >
       <button
         className="self-end"
