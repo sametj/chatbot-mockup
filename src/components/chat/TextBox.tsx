@@ -1,24 +1,18 @@
-import { Query } from "@/interfaces";
+import { ChatHistoryProps, Query, TextBoxProps } from "@/interfaces";
 import api from "@/services/api";
 
-import React, { FormEvent, useEffect, useRef, useState } from "react";
+import { FormEvent, useEffect, useRef, useState } from "react";
 import InsightsContainer from "../InsightsContainer";
 
-interface TextBoxProps {
-  queries: Query[];
-  setQueries: React.Dispatch<React.SetStateAction<Query[]>>;
-  setIsLoading: (bool: boolean) => void;
-}
-
-const TextBox: React.FC<TextBoxProps> = ({
+function TextBox({
   queries,
   setQueries,
   setIsLoading,
-}) => {
+  chatHistory,
+  setChatHistory,
+}: TextBoxProps & ChatHistoryProps) {
   const [divHeight, setDivHeight] = useState(100);
-
   const textareaRef = useRef<HTMLTextAreaElement>(null);
-
   useEffect(() => {
     const textarea = textareaRef.current;
     if (!textarea) return;
@@ -38,6 +32,10 @@ const TextBox: React.FC<TextBoxProps> = ({
     };
   }, []);
 
+  useEffect(() => {
+    localStorage.setItem("ChatHistory", JSON.stringify(chatHistory));
+  }, [chatHistory, queries]);
+
   function handleTextSubmit(event: FormEvent) {
     event.preventDefault();
     const newQuestion = String(textareaRef.current?.value as string);
@@ -46,15 +44,16 @@ const TextBox: React.FC<TextBoxProps> = ({
       id: String(Date.now()),
       content: newQuestion,
       type: "UserChat",
+      isPinned: false,
     };
-    setQueries([...queries, newQuery]);
+    setQueries((q) => [...q, newQuery]);
+    setChatHistory((history) => [...history, newQuery]);
     callQuery(newQuestion);
     document.querySelector<HTMLTextAreaElement>("#chat")!.value = "";
   }
 
-  const callQuery = async (question: string | null) => {
+  async function callQuery(question: string | null) {
     const payload = { question };
-
     setIsLoading(true);
 
     try {
@@ -93,7 +92,7 @@ const TextBox: React.FC<TextBoxProps> = ({
     } finally {
       setIsLoading(false);
     }
-  };
+  }
 
   return (
     <div className="my-auto flex w-full items-center justify-center p-8">
@@ -122,6 +121,6 @@ const TextBox: React.FC<TextBoxProps> = ({
       </form>
     </div>
   );
-};
+}
 
 export default TextBox;

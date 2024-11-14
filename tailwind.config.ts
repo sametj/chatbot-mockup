@@ -45,7 +45,7 @@ const generateSpacing = () => {
   }
 
   return spacing
-}
+};
 
 export default {
   content: [

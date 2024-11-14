@@ -5,12 +5,14 @@ import SidebarButton from "../SidebarButton";
 import leftsidebar from "/sidebar-left.svg";
 
 import chatIcon from "@/assets/svg/chat-circle-dots.svg";
+import { ChatHistoryProps, Query } from "@/interfaces";
+import { toast } from "react-toastify";
 import FileUpload from "../FileUpload";
 
-const textdemo =
-  "at eius adipisci illum illo quis vel, saepe reiciendis sit dolorum natus quaerat tenetur!orem, ipsum dolor sit amet consectetur adipisicing elit. Facilis earum incidunt recusandae aliquam porro corrupti voluptates at eius adipisci illum illo quis vel, saepe reiciendis sit dolorum natus quaerat tenetur!";
-
-export default function LeftSideBar() {
+export default function LeftSideBar({
+  chatHistory,
+  setChatHistory,
+}: ChatHistoryProps) {
   const [isLeftNavToggled, setIsLeftNavToggled] = useState(false);
 
   async function clearCache() {
@@ -21,9 +23,9 @@ export default function LeftSideBar() {
         },
       });
       if (response.status === 200) {
-        console.log(response.data.detail);
+        toast.success("Cache Sucessfully Cleared");
       } else {
-        console.log("Failed to clear cache");
+        toast.error("Failed to clear cache");
       }
     } catch (error) {
       console.log(error);
@@ -49,11 +51,29 @@ export default function LeftSideBar() {
           <SidebarButton icon={chatIcon} text="Data" />
           <h2 className="font-bold text-zinc-500">Pinned Chats</h2>
           <div className="flex max-h-300 flex-col gap-20 overflow-auto">
-            <ChatHistory text={textdemo} />
+            {chatHistory
+              .filter((h) => h.isPinned)
+              .map((h) => (
+                <ChatHistory
+                  key={h.id}
+                  id={h.id}
+                  text={h.content as string}
+                  isPinned={h.isPinned as boolean}
+                  setChatHistory={setChatHistory}
+                />
+              ))}
           </div>
           <h2 className="font-bold text-zinc-500">Chat History</h2>
           <div className="flex max-h-300 flex-col gap-20 overflow-auto">
-            <ChatHistory text={textdemo} />
+            {chatHistory.map((h: Query) => (
+              <ChatHistory
+                id={h.id}
+                key={h.id}
+                text={h.content as string}
+                isPinned={h.isPinned as boolean}
+                setChatHistory={setChatHistory}
+              />
+            ))}
           </div>
         </div>
       </section>

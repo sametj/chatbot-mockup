@@ -7,6 +7,7 @@ export interface Query {
   content: string | object;
   type: ChatType
   insights?: string | React.ReactNode;
+  isPinned?: boolean
 }
 
 
@@ -20,3 +21,12 @@ export interface FileValidation {
   size: number;
 }
 
+export interface TextBoxProps {
+  queries: Query[];
+  setQueries: React.Dispatch<React.SetStateAction<Query[]>>;
+  setIsLoading: (bool: boolean) => void;
+}
+export interface ChatHistoryProps {
+  chatHistory: Query[];
+  setChatHistory: React.Dispatch<React.SetStateAction<Query[]>>;
+}

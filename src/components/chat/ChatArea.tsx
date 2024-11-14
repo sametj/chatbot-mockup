@@ -1,11 +1,14 @@
-import { DataType, Query } from "@/interfaces";
+import { ChatHistoryProps, DataType, Query } from "@/interfaces";
 import { Fragment, useRef, useState } from "react";
 import Chart from "../Chart";
 import Table from "../Table";
 import { BotChat, UserChat } from "./ChatTypes";
 import TextBox from "./TextBox";
 
-export default function Chat() {
+export default function Chat({
+  chatHistory,
+  setChatHistory,
+}: ChatHistoryProps) {
   const [queries, setQueries] = useState<Query[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -45,6 +48,8 @@ export default function Chat() {
         )}
       </div>
       <TextBox
+        chatHistory={chatHistory}
+        setChatHistory={setChatHistory}
         queries={queries}
         setIsLoading={setIsLoading}
         setQueries={setQueries}
