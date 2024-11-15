@@ -14,7 +14,7 @@ export default function MainCanvas() {
       : JSON.parse(localStorage.getItem("ChatHistory") as string),
   );
   return (
-    <div className="relative mx-auto flex h-screen w-full flex-col bg-[#f7f8fa] font-sans">
+    <div className="relative mx-auto flex h-screen w-full flex-col bg-[#f7f8fa]">
       <ToastContainer
         position="top-center"
         autoClose={2000}

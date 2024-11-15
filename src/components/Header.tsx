@@ -3,7 +3,7 @@ export function Header() {
   return (
     <header className="aspect-1 flex h-100 w-full items-center justify-between border-b-2 bg-base-100">
       <div className="flex h-full items-center">
-        <img className="h-full p-8" src={logo} alt="" />
+        <img className="h-50 p-8" src={logo} alt="" />
         <h1 className="text-30 font-bold">AI Finance Portfolio</h1>
       </div>
       <div className="flex gap-8 px-20">
