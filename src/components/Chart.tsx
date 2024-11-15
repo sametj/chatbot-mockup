@@ -77,7 +77,7 @@ const Chart = ({ data }: { data: DataType }) => {
   };
 
   return (
-    <details className="collapse bg-base-100 p-8">
+    <details className="collapse collapse-arrow bg-base-100 p-8">
       <summary className="collapse-title text-xl font-bold">
         Show Visual
       </summary>

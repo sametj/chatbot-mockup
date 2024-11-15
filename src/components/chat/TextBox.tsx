@@ -11,7 +11,7 @@ function TextBox({
   chatHistory,
   setChatHistory,
 }: TextBoxProps & ChatHistoryProps) {
-  const [divHeight, setDivHeight] = useState(10);
+  const [divHeight, setDivHeight] = useState(100);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   useEffect(() => {
     const textarea = textareaRef.current;
@@ -62,7 +62,7 @@ function TextBox({
           Authorization: `Bearer ${import.meta.env.VITE_OPENAI_API_KEY}`,
         },
       });
-      console.log(response);
+
       if (response.status === 200) {
         const answerJson = response.data.answer;
         console.log(answerJson);

@@ -27,7 +27,7 @@ export default function Chat({
     <section className="mx-20 my-20 flex w-full flex-col rounded-2xl bg-gradient-to-b from-base-100 from-60% to-[#5427fc]/10 to-100% shadow-lg">
       <div
         ref={chatRef}
-        className="relative mx-auto mt-5 flex h-4/5 w-4/5 max-w-1200 flex-col items-center gap-20 overflow-auto"
+        className="relative mx-auto mt-5 flex h-[90%] w-full max-w-1200 flex-col items-center gap-20 overflow-auto"
       >
         {queries.map((query) => (
           <Fragment key={query.id}>
