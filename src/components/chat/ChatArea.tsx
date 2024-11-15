@@ -1,5 +1,5 @@
 import { ChatHistoryProps, DataType, Query } from "@/interfaces";
-import { Fragment, useRef, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 import Chart from "../Chart";
 import Table from "../Table";
 import { BotChat, UserChat } from "./ChatTypes";
@@ -14,7 +14,14 @@ export default function Chat({
 
   const chatRef = useRef<HTMLDivElement>(null);
 
-  // const chat = getLocalStorage();
+  useEffect(() => {
+    if (chatRef.current) {
+      chatRef.current.scrollTo({
+        top: chatRef.current.scrollHeight,
+        behavior: "smooth",
+      });
+    }
+  }, [queries]);
 
   return (
     <section className="mx-20 my-20 flex w-full flex-col rounded-2xl bg-gradient-to-b from-base-100 from-60% to-[#5427fc]/10 to-100% shadow-lg">

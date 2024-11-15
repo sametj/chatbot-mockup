@@ -64,7 +64,7 @@ export default function LeftSideBar({
               ))}
           </div>
           <h2 className="font-bold text-zinc-500">Chat History</h2>
-          <div className="flex max-h-300 flex-col gap-20 overflow-auto">
+          <div className="flex max-h-400 flex-col gap-20 overflow-auto">
             {chatHistory.map((h: Query) => (
               <ChatHistory
                 id={h.id}
@@ -79,7 +79,7 @@ export default function LeftSideBar({
       </section>
       <button
         onClick={() => clearCache()}
-        className={`btn btn-primary btn-wide absolute bottom-0 mb-20 h-50 self-center rounded-lg text-lg font-bold text-white ${!isLeftNavToggled ? "-translate-x-600" : ""} transition-all duration-300 ease-in`}
+        className={`btn btn-primary btn-wide absolute bottom-0 mb-10 h-50 self-center rounded-lg text-lg font-bold text-white ${!isLeftNavToggled ? "-translate-x-600" : ""} transition-all duration-300 ease-in`}
       >
         Clear Cache
       </button>

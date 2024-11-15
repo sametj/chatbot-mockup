@@ -63,7 +63,10 @@ const Chart = ({ data }: { data: DataType }) => {
         beginAtZero: true,
         ticks: {
           callback: function (tickValue: string | number) {
-            if (typeof tickValue === "number") {
+            if (
+              typeof tickValue === "number" &&
+              (tickValue < 1900 || tickValue > 2100)
+            ) {
               return `$${tickValue.toLocaleString()}`;
             }
             return tickValue;

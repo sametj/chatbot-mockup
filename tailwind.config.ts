@@ -58,6 +58,10 @@ export default {
       fontSize: generateFontSize(),
       spacing: generateSpacing(),
     },
+    fontFamily: {
+      "sans": ["Merriweather", "sans-serif"]
+
+    }
   },
   plugins: [
     daisyui

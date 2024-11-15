@@ -1,6 +1,7 @@
 import { FileValidation } from "@/interfaces";
 import api from "@/services/api";
 import { useState } from "react";
+import { toast } from "react-toastify";
 
 export default function FileUpload() {
   const [file, setFile] = useState<File | null>(null);
@@ -71,9 +72,9 @@ export default function FileUpload() {
           },
         });
         if (response.status === 200) {
-          console.log("file uploaded sucessfukl");
+          toast.success(response.data.detail);
         } else {
-          console.log("Failed to upload file");
+          toast.error(response.data.detail);
         }
       } catch (error) {
         console.log(error);
@@ -85,7 +86,7 @@ export default function FileUpload() {
     <div className="flex flex-col items-start gap-8">
       <span className="font-semibold">Upload a Data File</span>
       <div
-        className={`flex flex-col rounded-lg border-dashed bg-stone-300 p-8 text-center ${
+        className={`flex flex-col rounded-lg border-dashed bg-blue-200/20 p-8 text-center ${
           isDragging ? "border-2 border-blue-500" : "border-2 border-gray-400"
         }`}
         onDragOver={handleDragOver}

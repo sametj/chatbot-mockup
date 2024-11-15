@@ -2,6 +2,7 @@ import { ChatHistoryProps, Query, TextBoxProps } from "@/interfaces";
 import api from "@/services/api";
 
 import { FormEvent, useEffect, useRef, useState } from "react";
+import { toast } from "react-toastify";
 import InsightsContainer from "../InsightsContainer";
 
 function TextBox({
@@ -10,7 +11,7 @@ function TextBox({
   chatHistory,
   setChatHistory,
 }: TextBoxProps & ChatHistoryProps) {
-  const [divHeight, setDivHeight] = useState(100);
+  const [divHeight, setDivHeight] = useState(10);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   useEffect(() => {
     const textarea = textareaRef.current;
@@ -56,7 +57,12 @@ function TextBox({
     setIsLoading(true);
 
     try {
-      const response = await api.post("/query", payload);
+      const response = await api.post("/query", payload, {
+        headers: {
+          Authorization: `Bearer ${import.meta.env.VITE_OPENAI_API_KEY}`,
+        },
+      });
+      console.log(response);
       if (response.status === 200) {
         const answerJson = response.data.answer;
         console.log(answerJson);
@@ -75,8 +81,12 @@ function TextBox({
             },
           );
           insight = insights.data.summary;
-        } catch (error) {
-          console.log(error);
+        } catch (error: unknown) {
+          if (error instanceof Error) {
+            toast.error(error.message);
+          } else {
+            toast.error("An unknown error occurred.");
+          }
         }
 
         const newQuery: Query = {
@@ -106,14 +116,14 @@ function TextBox({
           name="chat"
           id="chat"
           placeholder="Ask me anything"
-          className="h-full min-h-100 w-[93%] resize-none rounded-lg bg-transparent p-12 outline-none"
+          className="h-full min-h-60 w-[93%] resize-none rounded-lg bg-transparent p-12 outline-none"
         />
         <button
           type="submit"
-          className="btn btn-circle btn-primary btn-md absolute bottom-20 right-10 flex w-50 items-center justify-center"
+          className="btn btn-circle btn-primary btn-md absolute bottom-5 right-10 flex w-50 items-center justify-center"
         >
           <img
-            className="h-full w-25"
+            className="h-full w-16"
             src="/paper-plane-right-fill.svg"
             alt="send icon"
           />

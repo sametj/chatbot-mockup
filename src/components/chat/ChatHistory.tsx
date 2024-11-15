@@ -32,8 +32,8 @@ export default function ChatHistory({
 
   return (
     <div className="flex gap-8">
-      <div className="relative flex h-fit w-4/5 shrink-0 items-center justify-center text-nowrap rounded-md bg-base-200 p-8">
-        <span ref={textRef} className="flex-1 overflow-x-auto text-center">
+      <div className="relative flex h-fit w-4/5 shrink-0 items-center justify-center rounded-md bg-blue-100/60 p-8">
+        <span ref={textRef} className="flex-1 overflow-x-auto">
           {text}
         </span>
         <button className="p-8" onClick={copyToClipBoard}>

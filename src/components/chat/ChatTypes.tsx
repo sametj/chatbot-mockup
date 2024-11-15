@@ -8,21 +8,14 @@ export function BotChat({
   content?: string | React.ReactNode;
   children?: React.ReactNode;
 }) {
-  function isImageUrl(url: string) {
-    return /\.(jpg|jpeg|png|gif|bmp|svg)$/.test(url);
-  }
   return (
-    <div className="mb-8 flex w-full flex-col items-center self-start rounded-2xl">
+    <div className="aspect-1 mb-8 flex w-full flex-col items-center self-start rounded-2xl">
       <div className="flex w-full items-center gap-20">
         <img className="avatar chat-image" src={chatIcon} alt="robot-icon" />
         <span className="font-bold">Here's the Information you requested</span>
       </div>
-      <div className="chat-bubble flex w-full flex-col gap-20 bg-blue-100/40 shadow-lg">
-        {typeof content === "string" && isImageUrl(content) ? (
-          <img src={content} alt="content" />
-        ) : (
-          content || children
-        )}
+      <div className="chat-bubble flex w-full flex-col gap-20 bg-blue-200 shadow-lg">
+        {content || children}
       </div>
     </div>
   );
