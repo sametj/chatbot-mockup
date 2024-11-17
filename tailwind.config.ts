@@ -72,9 +72,8 @@ export default {
         myTheme: {
           'primary': "#2e148e",
           "base-100": "#f7f8fa",
-
         }
-      }, "corporate",
+      }
     ]
   }
 } satisfies Config
