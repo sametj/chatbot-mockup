@@ -27,12 +27,20 @@ const Table = ({ data }: { data: DataType }) => {
               {columnTitles.map((title, colIndex) => (
                 <td key={colIndex}>
                   {/* Format numbers as currency if they are numeric, otherwise just display the text */}
-                  {(typeof data[title][rowIndex] === "number" &&
-                    (data[title][rowIndex] as number) < 1900) ||
-                  (typeof data[title][rowIndex] === "number" &&
-                    data[title][rowIndex] > 2100)
-                    ? `$${data[title][rowIndex].toLocaleString()}`
-                    : data[title][rowIndex]}
+                  {typeof data[title][rowIndex] === "number" ? (
+                    data[title][rowIndex] < 0 ? (
+                      <span className="text-red-600">
+                        $({Math.abs(data[title][rowIndex]).toLocaleString()})
+                      </span>
+                    ) : data[title][rowIndex] < 1900 ||
+                      data[title][rowIndex] > 2100 ? (
+                      `$${data[title][rowIndex].toLocaleString()}`
+                    ) : (
+                      data[title][rowIndex]
+                    )
+                  ) : (
+                    data[title][rowIndex]
+                  )}
                 </td>
               ))}
             </tr>

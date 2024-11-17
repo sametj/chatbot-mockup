@@ -63,14 +63,15 @@ const Chart = ({ data }: { data: DataType }) => {
         beginAtZero: true,
         ticks: {
           callback: function (tickValue: string | number) {
-            if (
-              typeof tickValue === "number" &&
-              (tickValue < 1900 || tickValue > 2100)
-            ) {
-              return `$${tickValue.toLocaleString()}`;
+            if (typeof tickValue === "number") {
+              if (tickValue < 0) {
+                return `<span style="color:red">(${Math.abs(tickValue).toLocaleString()})</span>`;
+              } else if (tickValue < 1900 || tickValue > 2100) {
+                return `$${tickValue.toLocaleString()}`;
+              }
             }
             return tickValue;
-          }, // Format as currency
+          }, // Format as currency and negative numbers in parentheses
         },
       },
     },
